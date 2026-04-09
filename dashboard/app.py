@@ -888,24 +888,24 @@ elif nav == "🔬  Analysis":
             # FIX: changed category_orders key "ParentalEduLabel" → "EduLabel"
             fig4 = px.violin(
                 fdf,
-                x="EduLabel",
+                x="ParentalEduLabel",
                 y="GPA",
-                color="EduLabel",
+                color="ParentalEduLabel",
                 color_discrete_sequence=[P["red"], P["amber"], P["accent"], P["cyan"], P["green"]],
-                category_orders={"EduLabel": edu_order},
+                category_orders={"ParentalEduLabel": edu_order},
                 box=True,
                 points=False,
                 title="GPA by Parental Education"
             )
             st.plotly_chart(apply_theme(fig4,360), use_container_width=True)
         with c4:
-            fig5 = px.violin(fdf, x="SupLabel", y="GPA", color="SupLabel",
-                             color_discrete_sequence=[P["red"],P["amber"],P["accent"],P["cyan"],P["green"]],
-                             category_orders={"SupLabel":sup_order}, box=True, points=False,
-                             title="GPA by Parental Support Level")
-            st.plotly_chart(apply_theme(fig5,360), use_container_width=True)
+          fig5 = px.violin(fdf, x="ParentalSupportLabel", y="GPA", color="ParentalSupportLabel",
+                 color_discrete_sequence=[P["red"],P["amber"],P["accent"],P["cyan"],P["green"]],
+                 category_orders={"ParentalSupportLabel":sup_order}, box=True, points=False,
+                 title="GPA by Parental Support Level")
+        st.plotly_chart(apply_theme(fig5,360), use_container_width=True)
         sec("Support × Grade Mix", "📐")
-        cross = pd.crosstab(fdf["SupLabel"], fdf["GradeLabel"], normalize="index")*100
+        cross = pd.crosstab(fdf["ParentalSupportLabel"], fdf["GradeLabel"], normalize="index")*100
         cross = cross.reindex(sup_order).fillna(0)
         fig6 = go.Figure()
         for g, c in GRADE_COLORS.items():
